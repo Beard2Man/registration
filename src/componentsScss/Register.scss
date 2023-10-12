@@ -4,4 +4,11 @@
   text-align: center;
   border: 1px solid black;
   width: 600px;
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    .registration-group {
+      width: 50%;
+    }
+  }
 }
