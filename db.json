@@ -1,9 +1,25 @@
 {
   "user": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "id": "Grzeg",
+      "secondname": "Olej",
+      "password": "321421321",
+      "email": "olej@mgail",
+      "gender": "female"
+    },
+    {
+      "id": "Grzeg3",
+      "secondname": "Olej3",
+      "password": "3214213213",
+      "email": "olej@mgail3",
+      "gender": "female"
+    },
+    {
+      "id": "321",
+      "secondname": "321",
+      "password": "321",
+      "email": "321",
+      "gender": "male"
     }
   ]
 }
