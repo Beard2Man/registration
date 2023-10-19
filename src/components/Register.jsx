@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "../componentsScss/Register.scss";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import validator from "validator";
 
 const Register = () => {
   const [id, idchange] = useState("");
@@ -9,25 +11,75 @@ const Register = () => {
   const [email, emailchange] = useState("");
   const [gender, genderchange] = useState("");
 
+  const navigate = useNavigate();
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageColor, setMessageColor] = useState("");
+
+  const [isPasswordStrong, setIsPasswordStron] = useState("");
+
+  const IsValidate = () => {
+    let isproceed = true;
+    let errormessage = "Enter the value in";
+    if (id === null || id === "") {
+      isproceed = false;
+      errormessage += "Username";
+    }
+    if (!isproceed) {
+      toast.warning(errormessage);
+    } else {
+      if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+      } else {
+        isproceed = false;
+        toast.warning("Please enter the valid email");
+      }
+    }
+
+    return isproceed;
+  };
+  const validatePassword = (value) => {
+    if (
+      validator.isStrongPassword(value, {
+        minLength: 8,
+        minLowercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+        minUppercase: 1,
+      })
+    ) {
+      setErrorMessage("Is Stron Password");
+      setMessageColor("green");
+      setIsPasswordStron(true);
+    } else {
+      setErrorMessage("Is Not Stron Password");
+      setMessageColor("red");
+      setIsPasswordStron(false);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    let regobj = { id, secondname, password, email, gender };
-    console.log(regobj);
+    if (IsValidate() && isPasswordStrong) {
+      let regobj = { id, secondname, password, email, gender };
+      console.log(regobj);
 
-    fetch(" http://localhost:8000/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(regobj),
-    })
-      .then((res) => {
-        console.log(res);
-        toast.success("Registered successfully.");
+      fetch(" http://localhost:8000/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(regobj),
       })
-      .catch((err) => {
-        toast.error("Failed:" + err.message);
-      });
+        .then((res) => {
+          toast.success("Registered successfully.");
+          navigate("/login");
+        })
+        .catch((err) => {
+          toast.error("Failed:" + err.message);
+        });
+    } else if (!isPasswordStrong) {
+      toast.warning("Password is not strong enough");
+    }
   };
 
   return (
@@ -57,7 +109,9 @@ const Register = () => {
                       Secon Name:<span className="star">*</span>
                       <input
                         value={secondname}
-                        onChange={(e) => secondnamechange(e.target.value)}
+                        onChange={(e) => {
+                          secondnamechange(e.target.value);
+                        }}
                       ></input>
                     </label>
                   </div>
@@ -68,8 +122,17 @@ const Register = () => {
                       Password:<span className="star">*</span>
                       <input
                         value={password}
-                        onChange={(e) => passwordchange(e.target.value)}
+                        onChange={(e) => {
+                          passwordchange(e.target.value);
+                          validatePassword(e.target.value);
+                        }}
                       ></input>
+                      <p className="message" style={{ color: messageColor }}>
+                        {" "}
+                        {errorMessage === "" ? null : (
+                          <span>{errorMessage}</span>
+                        )}
+                      </p>
                     </label>
                   </div>
                 </div>
@@ -79,7 +142,9 @@ const Register = () => {
                       Email:<span className="star">*</span>
                       <input
                         value={email}
-                        onChange={(e) => emailchange(e.target.value)}
+                        onChange={(e) => {
+                          emailchange(e.target.value);
+                        }}
                       ></input>
                     </label>
                   </div>
