@@ -3,12 +3,35 @@
   justify-content: center;
   text-align: center;
   border: 1px solid black;
-  width: 600px;
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    .registration-group {
-      width: 50%;
+  width: 650px;
+  height: 250px;
+  .registrationSection {
+    .message {
+      margin-left: 100px;
+      position: absolute;
+    }
+    button {
+      margin-top: 10px;
+      cursor: pointer;
+      color: white;
+      border-radius: 15px;
+      background-color: rgb(0, 149, 255);
+      border: none;
+      height: 35px;
+      width: 150px;
+    }
+    button:hover {
+      background-color: rgb(15, 207, 15);
+    }
+    .row {
+      height: 100px;
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+
+      .registration-group {
+        width: 50%;
+      }
     }
   }
 }

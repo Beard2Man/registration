@@ -6,7 +6,7 @@ import validator from "validator";
 
 const Register = () => {
   const [id, idchange] = useState("");
-  const [secondname, secondnamechange] = useState("");
+  const [surname, surnamechange] = useState("");
   const [password, passwordchange] = useState("");
   const [email, emailchange] = useState("");
   const [gender, genderchange] = useState("");
@@ -59,8 +59,8 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (IsValidate() && isPasswordStrong) {
-      let regobj = { id, secondname, password, email, gender };
+    if (IsValidate() && isPasswordStrong && gender && surname) {
+      let regobj = { id, surname, password, email, gender };
       console.log(regobj);
 
       fetch(" http://localhost:8000/user", {
@@ -79,6 +79,10 @@ const Register = () => {
         });
     } else if (!isPasswordStrong) {
       toast.warning("Password is not strong enough");
+    } else if (!gender) {
+      toast.warning("Select gender");
+    } else if (!surname) {
+      toast.warning("Add surname ");
     }
   };
 
@@ -106,11 +110,11 @@ const Register = () => {
                 <div className="registration-group">
                   <div>
                     <label>
-                      Secon Name:<span className="star">*</span>
+                      Surname:<span className="star">*</span>
                       <input
-                        value={secondname}
+                        value={surname}
                         onChange={(e) => {
-                          secondnamechange(e.target.value);
+                          surnamechange(e.target.value);
                         }}
                       ></input>
                     </label>
@@ -149,34 +153,34 @@ const Register = () => {
                     </label>
                   </div>
                 </div>
-                <div className="registration-group">
-                  <div>
-                    <label>Gender:</label>
-                    <br />
-                    <label>
-                      Male
-                      <input
-                        checked={gender === "male"}
-                        onChange={(e) => genderchange(e.target.value)}
-                        type="radio"
-                        name="gender"
-                        value="male"
-                        className="gender-group"
-                      ></input>
-                    </label>
+              </div>
+              <div className="genderLabel">
+                <div>
+                  <label>Gender:</label>
+                  <br />
+                  <label>
+                    Male
+                    <input
+                      checked={gender === "male"}
+                      onChange={(e) => genderchange(e.target.value)}
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      className="gender-group"
+                    ></input>
+                  </label>
 
-                    <label>
-                      Female
-                      <input
-                        onChange={(e) => genderchange(e.target.value)}
-                        checked={gender === "female"}
-                        type="radio"
-                        name="gender"
-                        value="female"
-                        className="gender-group"
-                      ></input>
-                    </label>
-                  </div>
+                  <label>
+                    Female
+                    <input
+                      onChange={(e) => genderchange(e.target.value)}
+                      checked={gender === "female"}
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      className="gender-group"
+                    ></input>
+                  </label>
                 </div>
               </div>
               <div>

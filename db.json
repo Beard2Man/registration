@@ -1,3 +1,25 @@
 {
-  "user": []
+  "user": [
+    {
+      "id": "Grzegorz",
+      "secondname": "Olej",
+      "password": "Olejpro00123#",
+      "email": "czoki01@gmail.com",
+      "gender": ""
+    },
+    {
+      "id": "321",
+      "secondname": "321",
+      "password": "wda@#32G",
+      "email": "golew@gmail.com",
+      "gender": "male"
+    },
+    {
+      "id": "3214",
+      "secondname": "",
+      "password": "dwhay2231q@#hH",
+      "email": "czoki01@gmil.com",
+      "gender": "male"
+    }
+  ]
 }
